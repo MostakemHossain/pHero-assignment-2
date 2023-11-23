@@ -26,7 +26,7 @@ const userValidationSchema = z.object({
   hobbies: z.array(z.string().min(1)),
   address: addressSchema,
   orders: z.array(orderSchema),
-  // isDeleted: z.boolean(),
+  
 });
 
 export default userValidationSchema;
