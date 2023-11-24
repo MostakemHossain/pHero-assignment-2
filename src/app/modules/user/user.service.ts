@@ -78,7 +78,26 @@ const totalPriceAndQuantitySpecificUser=async (userId:string)=>{
 
 }
 
+const orderShowsInSingleUser= async (userId: string) => {
+    const user= await User.findOne({userId});
+    if(user==null){
+        throw new Error('User not Found');      
+    }
+    // const orderDetails = user.orders.map((order, index) => ({
+    //     orderNumber: index + 1,
+    //     productName: order.productName,
+    //     price: order.price,
+    //     quantity: order.quantity,
+    // }));
+    // return JSON.stringify({
+    //     userId: user.userId,
+    //     username: user.username,
+    //     orders: orderDetails,
+    // });
 
+    return user.orders;
+
+}
 
 
 
@@ -89,6 +108,7 @@ export const userServices={
     getAsingleUser,
     deleteAUser,
     updateUser,
-    totalPriceAndQuantitySpecificUser
+    totalPriceAndQuantitySpecificUser,
+    orderShowsInSingleUser
     
 }
