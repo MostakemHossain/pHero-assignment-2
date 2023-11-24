@@ -28,12 +28,11 @@ const userSchema = new Schema<TUser, userModel, userMethod>({
         quantity: { type: Number, required: true },
       },
     ],
+    default: undefined, // make it optional
   },
 });
 
 userSchema.pre("save", async function (next) {
-  //hashing password
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   user.password = await bcrypt.hash(
     user.password,

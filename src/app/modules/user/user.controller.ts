@@ -146,12 +146,14 @@ const orderShowsInSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const totalSum = await userServices.orderShowsInSingleUser(userId);
+    const showOrderData = await userServices.orderShowsInSingleUser(userId);
 
     res.status(200).json({
       status: "true",
       message: "Order fetched successfully!",
-      data: totalSum,
+      data: {
+        "orders":showOrderData,
+      },
     });
   } catch (error: any) {
     console.log(error);

@@ -25,7 +25,8 @@ const userValidationSchema = z.object({
   isActive: z.enum(["active", "inactive"]),
   hobbies: z.array(z.string().min(1)),
   address: addressSchema,
-  orders: z.array(orderSchema),
+  orders: z.array(orderSchema).optional(), 
 });
 
 export default userValidationSchema;
+
