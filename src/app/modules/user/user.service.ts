@@ -14,10 +14,22 @@ const getAllUsers= async()=>{
    
 }
 
+const getAsingleUser= async(userId:string)=>{
+    const user= await User.findOne({userId}).select('-password')
+    return user;
+}
+
+const deleteAUser= async(userId:string)=>{
+    const result= await User.deleteOne({userId});
+    return result;
+}
+
 
 
 export const userServices={
     createStudent,
-    getAllUsers
+    getAllUsers,
+    getAsingleUser,
+    deleteAUser
     
 }
