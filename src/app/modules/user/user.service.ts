@@ -1,16 +1,23 @@
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
 
-import userValidationSchema from "./user.validation";
-const createUser= async (userData: TUser): Promise<TUser>=>{
+const createStudent = async(user:TUser)=>{
 
-    const validateData= userValidationSchema.parse(userData);
+    const users=await User.create(user)
+    return users;
 
-    const result= await User.create(validateData);
-
-    return result;
 }
 
+const getAllUsers= async()=>{
+    const users= await User.find().select('-password') 
+    return users;
+   
+}
+
+
+
 export const userServices={
-    createUser
+    createStudent,
+    getAllUsers
+    
 }
