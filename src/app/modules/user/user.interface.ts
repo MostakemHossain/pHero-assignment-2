@@ -25,4 +25,11 @@ export type TUser = {
  
 };
 
-export type userModel = Model<TUser>;
+export type userMethod= {
+  isUserExist(userId:string): Promise<TUser | null>
+}
+
+
+
+
+export type userModel = Model<TUser,Record<string, never>,userMethod>;

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
+import { User } from "./user.model";
 import { userServices } from "./user.service";
 import userValidationSchema from "./user.validation";
 
@@ -19,7 +20,7 @@ const createUser = async (req: Request, res: Response) => {
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
-        status: 'fail',
+        status: 'f',
         message: error.message || 'Something went wrong',
       })
     }
@@ -38,7 +39,7 @@ const createUser = async (req: Request, res: Response) => {
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
-        status: 'fail',
+        status: 'false',
         message: error.message || 'Something went wrong',
       })
     }
@@ -60,8 +61,12 @@ const createUser = async (req: Request, res: Response) => {
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
-        status: 'fail',
-        message: error.message || 'Something went wrong',
+        "success": false,
+    "message": "User not found",
+    "error": {
+        "code": 404,
+        "description": "User not found!"
+    }
       })
     }
   }
@@ -69,18 +74,50 @@ const createUser = async (req: Request, res: Response) => {
     try {
       const {userId} = req.params
       
-      const result = await userServices.getAsingleUser(userId);
+       await userServices.getAsingleUser(userId);
       res.status(200).json({
         status: 'success',
         message: 'User deleted successFully',
-        data: result,
+        data: null,
       })
     
     } catch (error: any) {
       console.log(error)
       res.status(500).json({
-        status: 'fail',
-        message: error.message || 'Something went wrong',
+        "success": false,
+    "message": "User not found",
+    "error": {
+        "code": 404,
+        "description": "User not found!"
+    }
+      })
+    }
+  }
+
+
+  const updateUserController = async (req: Request, res: Response) => {
+    try {
+      const {userId} = req.params
+      const userData=req.body;
+     
+      
+      await userServices.updateUser(userId,userData);
+     const user= await User.findOne({userId});
+      res.status(200).json({
+        status: 'success',
+        message: 'User updated successfully!',
+        data: user,
+      })
+    
+    } catch (error: any) {
+      console.log(error)
+      res.status(500).json({
+        "success": false,
+    "message": "User not found",
+    "error": {
+        "code": 404,
+        "description": "User not found!"
+    }
       })
     }
   }
@@ -94,6 +131,7 @@ const createUser = async (req: Request, res: Response) => {
     createUser,
     getAllUsers,
     getASingleUser,
-    deleteAUser
+    deleteAUser,
+    updateUserController
    
   }
