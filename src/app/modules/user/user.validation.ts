@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const addressSchema = z.object({
   street: z.string().min(1),
@@ -13,7 +13,7 @@ const orderSchema = z.object({
 });
 
 const userValidationSchema = z.object({
-  userId: z.string(),
+  userId: z.number(),
   username: z.string().min(1),
   password: z.string().min(1),
   fullName: z.object({
@@ -22,11 +22,10 @@ const userValidationSchema = z.object({
   }),
   age: z.number(),
   email: z.string().email(),
-  isActive: z.enum(['active', 'inactive']),
+  isActive: z.enum(["active", "inactive"]),
   hobbies: z.array(z.string().min(1)),
   address: addressSchema,
   orders: z.array(orderSchema),
-  
 });
 
 export default userValidationSchema;

@@ -1,8 +1,10 @@
-import { model, Schema } from 'mongoose';
-import { TUser, userMethod, userModel } from './user.interface';
+import bcrypt from "bcrypt";
+import { model, Schema } from "mongoose";
+import config from "../../config";
+import { TUser, userMethod, userModel } from "./user.interface";
 
-const userSchema = new Schema<TUser,userModel,userMethod>({
-  userId: { type: String, required: true, unique: true },
+const userSchema = new Schema<TUser, userModel, userMethod>({
+  userId: { type: Number, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fullName: {
@@ -11,7 +13,7 @@ const userSchema = new Schema<TUser,userModel,userMethod>({
   },
   age: { type: Number, required: true },
   email: { type: String, required: true },
-  isActive: { type: String, enum: ['active', 'inactive'], required: true },
+  isActive: { type: String, enum: ["active", "inactive"], required: true },
   hobbies: { type: [String], required: true },
   address: {
     street: { type: String, required: true },
@@ -27,18 +29,27 @@ const userSchema = new Schema<TUser,userModel,userMethod>({
       },
     ],
   },
-
-
-
-
- 
 });
 
+userSchema.pre("save", async function (next) {
+  //hashing password
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bycrypt_salt_rounds),
+  );
+  next();
+});
 
-userSchema.methods.isUserExist= async function(userId :string){
-  const existingUser= await User.findOne({userId})
+userSchema.post("save", async function (doc, next) {
+  doc.password = "";
+  next();
+});
+
+userSchema.methods.isUserExist = async function (userId: string) {
+  const existingUser = await User.findOne({ userId });
   return existingUser;
-}
+};
 
-
-export const User = model<TUser,userModel>('User', userSchema);
+export const User = model<TUser, userModel>("User", userSchema);

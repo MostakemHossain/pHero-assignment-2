@@ -1,7 +1,7 @@
-import { Model } from 'mongoose';
+import { Model } from "mongoose";
 
 export type TUser = {
-  userId: string;
+  userId: number;
   username: string;
   password: string;
   fullName: {
@@ -10,7 +10,7 @@ export type TUser = {
   };
   age: number;
   email: string;
-  isActive: 'active' | 'inactive';
+  isActive: "active" | "inactive";
   hobbies: string[];
   address: {
     street: string;
@@ -22,14 +22,10 @@ export type TUser = {
     price: number;
     quantity: number;
   }>;
- 
 };
 
-export type userMethod= {
-  isUserExist(userId:string): Promise<TUser | null>
-}
+export type userMethod = {
+  isUserExist(userId: string): Promise<TUser | null>;
+};
 
-
-
-
-export type userModel = Model<TUser,Record<string, never>,userMethod>;
+export type userModel = Model<TUser, Record<string, never>, userMethod>;
