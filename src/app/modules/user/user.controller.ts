@@ -149,7 +149,7 @@ const orderShowsInSingleUser = async (req: Request, res: Response) => {
     const totalSum = await userServices.orderShowsInSingleUser(userId);
 
     res.status(200).json({
-      status: "success",
+      status: "true",
       message: "Order fetched successfully!",
       data: totalSum,
     });
@@ -173,7 +173,7 @@ const AddProductToOrder = async (req: Request, res: Response) => {
      await userServices.AddProductToOrder(userId, userData);
 
     res.status(200).json({
-      status: "success",
+      status: "true",
       message: "Order created successfully!",
       data: null,
     });
