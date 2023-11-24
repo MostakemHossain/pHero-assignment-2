@@ -174,6 +174,35 @@ const createUser = async (req: Request, res: Response) => {
 
 
   }
+  const AddProductToOrder= async (req: Request, res: Response) => {
+    try {
+      const {userId} = req.params
+      const userData=req.body;
+
+     const totalSum= await userServices.AddProductToOrder(userId,userData);
+     
+      res.status(200).json({
+        status: 'success',
+        message: 'Order fetched successfully!',
+        data: totalSum,
+      })
+    
+    } catch (error: any) {
+      console.log(error)
+      res.status(500).json({
+        "success": false,
+    "message": "User not found",
+    "error": {
+        "code": 404,
+        "description": "User not found!"
+    }
+      })
+    }
+
+
+  }
+
+
 
   
 
@@ -187,6 +216,7 @@ const createUser = async (req: Request, res: Response) => {
     deleteAUser,
     updateUserController,
     totalPriceAndQuantitySpecificUser,
-    orderShowsInSingleUser
+    orderShowsInSingleUser,
+    AddProductToOrder
    
   }

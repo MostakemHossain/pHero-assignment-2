@@ -99,6 +99,29 @@ const orderShowsInSingleUser= async (userId: string) => {
 
 }
 
+const AddProductToOrder = async (userId: string, newOrder: { productName: string; price: number; quantity: number }): Promise<void> => {
+    
+        const user = await User.findOne({ userId });
+
+        if (!user) {
+            throw new Error('User not Found');
+        }
+
+        if (!user.orders) {
+            user.orders = [];
+        }
+
+        user.orders.push(newOrder);
+
+        
+        await user.save();
+
+        
+        return user;
+        
+     
+};
+
 
 
 
@@ -109,6 +132,7 @@ export const userServices={
     deleteAUser,
     updateUser,
     totalPriceAndQuantitySpecificUser,
-    orderShowsInSingleUser
+    orderShowsInSingleUser,
+    AddProductToOrder
     
 }
