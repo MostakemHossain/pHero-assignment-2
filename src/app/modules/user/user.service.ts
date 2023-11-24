@@ -59,13 +59,27 @@ const updateUser = async (userId: string, userData: TUser) => {
 
     return res;
 };
-// const updateUser= async (userId: string,userData:TUser): Promise<TUser | null>=>{
-//     const result= await User.updateMany(userId,userData,{
-//         new: true,
-//         runValidators:true,
-//     })
-//     return result;
-// }
+
+const totalPriceAndQuantitySpecificUser=async (userId:string)=>{
+    const user= await User.findOne({userId});
+    if(user==null){
+        throw new Error('User not Found');      
+    }
+    const total = user.orders.reduce(
+        (acc, order) => {
+            acc.totalProductPrice += order.price * order.quantity;
+            acc.totalQuantity += order.quantity;
+            return acc;
+        },
+        { totalProductPrice: 0, totalQuantity: 0 }
+    );
+    return total.totalProductPrice;
+
+
+}
+
+
+
 
 
 
@@ -74,6 +88,7 @@ export const userServices={
     getAllUsers,
     getAsingleUser,
     deleteAUser,
-    updateUser
+    updateUser,
+    totalPriceAndQuantitySpecificUser
     
 }

@@ -122,6 +122,33 @@ const createUser = async (req: Request, res: Response) => {
     }
   }
 
+  const totalPriceAndQuantitySpecificUser= async (req: Request, res: Response) => {
+    try {
+      const {userId} = req.params
+
+     const totalSum= await userServices.totalPriceAndQuantitySpecificUser(userId);
+     
+      res.status(200).json({
+        status: 'success',
+        message: 'Total price calculated successfully!',
+        data: totalSum,
+      })
+    
+    } catch (error: any) {
+      console.log(error)
+      res.status(500).json({
+        "success": false,
+    "message": "User not found",
+    "error": {
+        "code": 404,
+        "description": "User not found!"
+    }
+      })
+    }
+
+
+  }
+
   
 
 
@@ -132,6 +159,7 @@ const createUser = async (req: Request, res: Response) => {
     getAllUsers,
     getASingleUser,
     deleteAUser,
-    updateUserController
+    updateUserController,
+    totalPriceAndQuantitySpecificUser
    
   }
