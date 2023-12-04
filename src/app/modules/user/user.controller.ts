@@ -6,7 +6,7 @@ import userValidationSchema from "./user.validation";
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { users } = req.body;
+    const  users  = req.body;
 
     // validation data with zod
     const validateData = userValidationSchema.parse(users);

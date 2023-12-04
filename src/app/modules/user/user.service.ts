@@ -5,7 +5,7 @@ const createStudent = async (userData: TUser) => {
   // const users=await User.create(user)
   // return users;
   const user = new User(userData);
-  if (await user.isUserExist(userData.userId)) {
+  if (await user.isUserExist(Number(userData.userId))) {
     throw new Error("User already exist");
   }
   const result = await user.save(); //build in instance method
@@ -47,6 +47,7 @@ const updateUser = async (userId: string, userData: TUser) => {
     {
       $set: userData,
     },
+    { new: true }
   );
 
   return res;

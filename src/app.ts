@@ -8,10 +8,10 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/users", userRoutes);
+app.use("/", userRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("welcome to the basic route & API testing");
 });
 
 export default app;
