@@ -13,7 +13,7 @@ const userSchema = new Schema<TUser, userModel, userMethod>({
   },
   age: { type: Number, required: true },
   email: { type: String, required: true },
-  isActive: { type: String, enum: ["active", "inactive"], required: true },
+  isActive: { type: Boolean, required: true },
   hobbies: { type: [String], required: true },
   address: {
     street: { type: String, required: true },

@@ -22,7 +22,7 @@ const userValidationSchema = z.object({
   }),
   age: z.number(),
   email: z.string().email(),
-  isActive: z.enum(["active", "inactive"]),
+  isActive: z.boolean(),
   hobbies: z.array(z.string().min(1)),
   address: addressSchema,
   orders: z.array(orderSchema).optional(), 
